@@ -22,6 +22,9 @@
 		0D2AAF8E187355CD00397E2A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D2AAF6D187355CD00397E2A /* UIKit.framework */; };
 		0D2AAF96187355CD00397E2A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D2AAF94187355CD00397E2A /* InfoPlist.strings */; };
 		0D2AAF98187355CD00397E2A /* StuffTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2AAF97187355CD00397E2A /* StuffTests.m */; };
+		0D2AAFA31873561100397E2A /* SRFCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2AAFA21873561100397E2A /* SRFCVCell.m */; };
+		0D2AAFA5187392E200397E2A /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D2AAFA4187392E200397E2A /* avatar.jpg */; };
+		0D2AAFA7187397E600397E2A /* avatar2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D2AAFA6187397E600397E2A /* avatar2.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,10 @@
 		0D2AAF93187355CD00397E2A /* StuffTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StuffTests-Info.plist"; sourceTree = "<group>"; };
 		0D2AAF95187355CD00397E2A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0D2AAF97187355CD00397E2A /* StuffTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StuffTests.m; sourceTree = "<group>"; };
+		0D2AAFA11873561100397E2A /* SRFCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFCVCell.h; sourceTree = "<group>"; };
+		0D2AAFA21873561100397E2A /* SRFCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFCVCell.m; sourceTree = "<group>"; };
+		0D2AAFA4187392E200397E2A /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
+		0D2AAFA6187397E600397E2A /* avatar2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar2.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,12 +121,16 @@
 		0D2AAF6F187355CD00397E2A /* Stuff */ = {
 			isa = PBXGroup;
 			children = (
+				0D2AAFA6187397E600397E2A /* avatar2.jpg */,
+				0D2AAFA4187392E200397E2A /* avatar.jpg */,
 				0D2AAF78187355CD00397E2A /* SRFAppDelegate.h */,
 				0D2AAF79187355CD00397E2A /* SRFAppDelegate.m */,
 				0D2AAF7B187355CD00397E2A /* Main_iPhone.storyboard */,
 				0D2AAF7E187355CD00397E2A /* Main_iPad.storyboard */,
 				0D2AAF81187355CD00397E2A /* SRFViewController.h */,
 				0D2AAF82187355CD00397E2A /* SRFViewController.m */,
+				0D2AAFA11873561100397E2A /* SRFCVCell.h */,
+				0D2AAFA21873561100397E2A /* SRFCVCell.m */,
 				0D2AAF84187355CD00397E2A /* Images.xcassets */,
 				0D2AAF70187355CD00397E2A /* Supporting Files */,
 			);
@@ -233,9 +244,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D2AAF80187355CD00397E2A /* Main_iPad.storyboard in Resources */,
+				0D2AAFA5187392E200397E2A /* avatar.jpg in Resources */,
 				0D2AAF85187355CD00397E2A /* Images.xcassets in Resources */,
 				0D2AAF7D187355CD00397E2A /* Main_iPhone.storyboard in Resources */,
 				0D2AAF74187355CD00397E2A /* InfoPlist.strings in Resources */,
+				0D2AAFA7187397E600397E2A /* avatar2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +269,7 @@
 			files = (
 				0D2AAF7A187355CD00397E2A /* SRFAppDelegate.m in Sources */,
 				0D2AAF83187355CD00397E2A /* SRFViewController.m in Sources */,
+				0D2AAFA31873561100397E2A /* SRFCVCell.m in Sources */,
 				0D2AAF76187355CD00397E2A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

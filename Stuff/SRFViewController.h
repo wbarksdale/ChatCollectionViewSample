@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SRFViewController : UIViewController
+@interface SRFViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @end
