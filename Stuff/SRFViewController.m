@@ -23,15 +23,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.data = @[@"This text.",
-                  @"Is very important text.",
+    self.data = @[@"Is very important text.",
+                  @"This text.",
                   @"Please observe this important text.",
-                  @"Text.",
-                  @"Texty Text."];
+                  @"Text."
+                  @"if they are used correctly blah blah blah, blah blah blah blah. moremoremoremorem hahahah blahy bhba dfke e e e dfasdf efe efasdf efe",
+                  @"Texty Text.",
+                  @"."];
     
     self.captions = @[@"This is a small caption",
                       @"captions can be fun",
-                      @"if they are used correctly",
+                      @"if they are used correctly blah blah blah, blah blah blah blah",
                       @"Lol catz"];
 }
 
@@ -52,18 +54,19 @@
     NSString *text = self.data[indexPath.row % self.data.count];
     NSString *caption = self.captions[indexPath.row % self.captions.count];
     
-    if(indexPath.row % 2) {
-        cell.avatarPosition = ZRAvatarPositionLeft;
+    if(indexPath.row % 1) {
+        cell.avatarPosition = ZRAvatarPositionRight;
         [cell setAvatarImage:[UIImage imageNamed:@"avatar.jpg"]];
     }
     else {
-        cell.avatarPosition = ZRAvatarPositionRight;
+        cell.avatarPosition = ZRAvatarPositionLeft;
         [cell setAvatarImage:[UIImage imageNamed:@"avatar2.jpg"]];
     }
     
     [cell setTheText:text];
     [cell setTheCaption:caption];
     
+    [cell setNeedsLayout];
     [cell layoutIfNeeded];
 }
 
@@ -78,7 +81,7 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 200;
+    return 500;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

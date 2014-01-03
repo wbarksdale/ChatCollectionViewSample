@@ -25,6 +25,8 @@
 		0D2AAFA31873561100397E2A /* SRFCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2AAFA21873561100397E2A /* SRFCVCell.m */; };
 		0D2AAFA5187392E200397E2A /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D2AAFA4187392E200397E2A /* avatar.jpg */; };
 		0D2AAFA7187397E600397E2A /* avatar2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D2AAFA6187397E600397E2A /* avatar2.jpg */; };
+		0DC41DD81875D8DE000737CD /* SRFBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC41DD71875D8DE000737CD /* SRFBubbleView.m */; };
+		0DC41DDB18773432000737CD /* WFBAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC41DDA18773432000737CD /* WFBAutoLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,10 @@
 		0D2AAFA21873561100397E2A /* SRFCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFCVCell.m; sourceTree = "<group>"; };
 		0D2AAFA4187392E200397E2A /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		0D2AAFA6187397E600397E2A /* avatar2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar2.jpg; sourceTree = "<group>"; };
+		0DC41DD61875D8DE000737CD /* SRFBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRFBubbleView.h; sourceTree = "<group>"; };
+		0DC41DD71875D8DE000737CD /* SRFBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRFBubbleView.m; sourceTree = "<group>"; };
+		0DC41DD918773432000737CD /* WFBAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WFBAutoLayout.h; path = ../WFBAutoLayout.h; sourceTree = "<group>"; };
+		0DC41DDA18773432000737CD /* WFBAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WFBAutoLayout.m; path = ../WFBAutoLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +127,8 @@
 		0D2AAF6F187355CD00397E2A /* Stuff */ = {
 			isa = PBXGroup;
 			children = (
+				0DC41DD918773432000737CD /* WFBAutoLayout.h */,
+				0DC41DDA18773432000737CD /* WFBAutoLayout.m */,
 				0D2AAFA6187397E600397E2A /* avatar2.jpg */,
 				0D2AAFA4187392E200397E2A /* avatar.jpg */,
 				0D2AAF78187355CD00397E2A /* SRFAppDelegate.h */,
@@ -131,6 +139,8 @@
 				0D2AAF82187355CD00397E2A /* SRFViewController.m */,
 				0D2AAFA11873561100397E2A /* SRFCVCell.h */,
 				0D2AAFA21873561100397E2A /* SRFCVCell.m */,
+				0DC41DD61875D8DE000737CD /* SRFBubbleView.h */,
+				0DC41DD71875D8DE000737CD /* SRFBubbleView.m */,
 				0D2AAF84187355CD00397E2A /* Images.xcassets */,
 				0D2AAF70187355CD00397E2A /* Supporting Files */,
 			);
@@ -269,6 +279,8 @@
 			files = (
 				0D2AAF7A187355CD00397E2A /* SRFAppDelegate.m in Sources */,
 				0D2AAF83187355CD00397E2A /* SRFViewController.m in Sources */,
+				0DC41DDB18773432000737CD /* WFBAutoLayout.m in Sources */,
+				0DC41DD81875D8DE000737CD /* SRFBubbleView.m in Sources */,
 				0D2AAFA31873561100397E2A /* SRFCVCell.m in Sources */,
 				0D2AAF76187355CD00397E2A /* main.m in Sources */,
 			);
@@ -489,6 +501,7 @@
 				0D2AAF9D187355CD00397E2A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0D2AAF9E187355CD00397E2A /* Build configuration list for PBXNativeTarget "StuffTests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +510,7 @@
 				0D2AAFA0187355CD00397E2A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

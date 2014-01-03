@@ -7,19 +7,39 @@
 //
 
 #import "SRFCVCell.h"
+#import "SRFBubbleView.h"
+#import "WFBAutoLayout.h"
+
 @interface SRFCVCell()
 
 @property(nonatomic, strong) UIImageView *avatarImageLeft;
-@property(nonatomic, strong) UILabel *textLabelLeft;
+@property(nonatomic, strong) SRFBubbleView *textBubbleLeft;
 @property(nonatomic, strong) UILabel *captionLabelLeft;
 
 @property(nonatomic, strong) UIImageView *avatarImageRight;
-@property(nonatomic, strong) UILabel *textLabelRight;
+@property(nonatomic, strong) SRFBubbleView *textBubbleRight;
 @property(nonatomic, strong) UILabel *captionLabelRight;
 
 @end
 
 @implementation SRFCVCell
+
+
+
+/********************************************************************************
+ * Static Constant Declarations
+ */
+
+static const CGFloat AvatarTopPadding = 10.f;
+static const CGFloat CellBottomPadding = 10.0f;
+static const CGFloat AvatarLeftPadding = 10.f;
+static const CGFloat AvatarSize = 50.f;
+static const CGFloat TextPaddingBetweenAvatar = 10.0f;
+static const CGFloat TextPaddingToScreenEdge = 20.0f;
+static const CGFloat TextMaxWidth = 150.0f;
+
+
+
 
 /********************************************************************************
  * Initialization
@@ -48,10 +68,10 @@
     //////////////////////////////////////////////////////////////////////
     // Allocate and layout the subviews for avatar position left
     
-    _textLabelLeft = [[UILabel alloc] init];
+    _textBubbleLeft = [[SRFBubbleView alloc] init];
     _captionLabelLeft = [[UILabel alloc] init];
     _avatarImageLeft = [[UIImageView alloc] init];
-    _textLabelRight = [[UILabel alloc] init];
+    _textBubbleRight = [[SRFBubbleView alloc] init];
     _captionLabelRight = [[UILabel alloc] init];
     _avatarImageRight = [[UIImageView alloc] init];
     
@@ -61,10 +81,8 @@
         if(i == 1){
             _avatarPosition = ZRAvatarPositionLeft;
         }
-        [[self currentTextLabel] setBackgroundColor:[UIColor redColor]];
-        [[self currentTextLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [[self currentTextLabel] setFont:[UIFont fontWithName:@"Futura" size:16.0f]];
-        [[self currentTextLabel] setNumberOfLines:0];
+        [[self currentTextBubble] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [[self currentTextBubble] setMaxWidth:TextMaxWidth];
         
         [[self currentCaptionLabel] setBackgroundColor:[UIColor blueColor]];
         [[self currentCaptionLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -80,17 +98,17 @@
     // Setup the view heirarchy
     
     [self addSubview:_avatarImageLeft];
-    [self addSubview:_textLabelLeft];
+    [self addSubview:_textBubbleLeft];
     [self addSubview:_captionLabelLeft];
     [self addSubview:_avatarImageRight];
-    [self addSubview:_textLabelRight];
+    [self addSubview:_textBubbleRight];
     [self addSubview:_captionLabelRight];
     
     
     
     //////////////////////////////////////////////////////////////////////
     // Add autolayout constraints
-    
+    [self addConstraints:[self cellConstraints]];
     [self addConstraints:[self avatarImageLeftConstraints]];
     [self addConstraints:[self textLabelLeftConstraints]];
     [self addConstraints:[self captionLabelLeftConstraints]];
@@ -100,119 +118,57 @@
     
 }
 
-static const CGFloat AvatarTopPadding = 10.f;
-static const CGFloat AvatarLeftPadding = 10.f;
-static const CGFloat AvatarSize = 50.f;
-- (NSArray *) avatarImageLeftConstraints {
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.avatarImageLeft
-                                                           attribute:NSLayoutAttributeTop
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:self
-                                                           attribute:NSLayoutAttributeTop
-                                                          multiplier:1.0f
-                                                            constant:AvatarTopPadding];
-    
-    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.avatarImageLeft
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1.0f
-                                                             constant:AvatarLeftPadding];
-    
-    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.avatarImageLeft
-                                                             attribute:NSLayoutAttributeWidth
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:NSLayoutAttributeNotAnAttribute
-                                                            multiplier:0
-                                                              constant:AvatarSize];
-    
-    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.avatarImageLeft
+- (NSArray *) cellConstraints {
+    NSLayoutConstraint *width = [WFBAutoLayout setWidth:self toValue:320.f];
+    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self
                                                               attribute:NSLayoutAttributeHeight
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:nil
+                                                              relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                 toItem:Nil
                                                               attribute:NSLayoutAttributeNotAnAttribute
                                                              multiplier:0
-                                                               constant:AvatarSize];
-    
+                                                               constant:AvatarSize + AvatarTopPadding + AvatarTopPadding];
+    return @[width, height];
+}
+
+- (NSArray *) avatarImageLeftConstraints {
+    NSLayoutConstraint *top = [WFBAutoLayout matchTopEdge:self.avatarImageLeft to:self plusOffset:AvatarTopPadding];
+    NSLayoutConstraint *left = [WFBAutoLayout matchLeftEdge:self.avatarImageLeft to:self plusOffset:AvatarLeftPadding];
+    NSLayoutConstraint *width = [WFBAutoLayout setWidth:self.avatarImageLeft toValue:AvatarSize];
+    NSLayoutConstraint *height = [WFBAutoLayout setHeight:self.avatarImageLeft toValue:AvatarSize];
     return @[top, left, width, height];
 }
 
 - (NSArray *) avatarImageRightConstraints {
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.avatarImageRight
-                                                           attribute:NSLayoutAttributeTop
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:self
-                                                           attribute:NSLayoutAttributeTop
-                                                          multiplier:1.0f
-                                                            constant:AvatarTopPadding];
-    
-    NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.avatarImageRight
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1.0f
-                                                             constant:-AvatarLeftPadding];
-    
-    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.avatarImageRight
-                                                             attribute:NSLayoutAttributeWidth
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil
-                                                             attribute:NSLayoutAttributeNotAnAttribute
-                                                            multiplier:0
-                                                              constant:AvatarSize];
-    
-    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:self.avatarImageRight
-                                                              attribute:NSLayoutAttributeHeight
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:nil
-                                                              attribute:NSLayoutAttributeNotAnAttribute
-                                                             multiplier:0
-                                                               constant:AvatarSize];
-    
+    NSLayoutConstraint *top = [WFBAutoLayout matchTopEdge:self.avatarImageRight to:self plusOffset:AvatarTopPadding];
+    NSLayoutConstraint *right = [WFBAutoLayout matchRightEdge:self.avatarImageRight to:self plusOffset:-AvatarLeftPadding];
+    NSLayoutConstraint *width = [WFBAutoLayout setWidth:self.avatarImageRight toValue:AvatarSize];
+    NSLayoutConstraint *height = [WFBAutoLayout setHeight:self.avatarImageLeft toValue:AvatarSize];
     return @[top, right, width, height];
 }
 
-static const CGFloat TextPaddingBetweenAvatar = 10.0f;
-static const CGFloat TextMaxWidth = 150.0f;
 - (NSArray *) textLabelLeftConstraints {
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textLabelLeft
-                                                           attribute:NSLayoutAttributeTop
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.avatarImageLeft
-                                                           attribute:NSLayoutAttributeTop
-                                                          multiplier:1.0f
-                                                            constant:0];
-    
-    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.textLabelLeft
+    NSLayoutConstraint *top = [WFBAutoLayout matchTopEdge:self.textBubbleLeft to:self.avatarImageLeft plusOffset:0];
+    NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.textBubbleLeft
                                                             attribute:NSLayoutAttributeLeft
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.avatarImageLeft
-                                                            attribute:NSLayoutAttributeRight
+                                                             attribute:NSLayoutAttributeRight
                                                            multiplier:1.0f
                                                              constant:TextPaddingBetweenAvatar];
-    
-    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.textLabelLeft
-                                                             attribute:NSLayoutAttributeWidth
+    NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.textBubbleLeft
+                                                             attribute:NSLayoutAttributeRight
                                                              relatedBy:NSLayoutRelationLessThanOrEqual
-                                                                toItem:Nil
-                                                             attribute:NSLayoutAttributeNotAnAttribute
-                                                            multiplier:0
-                                                              constant:TextMaxWidth];
-    return @[top, left, width];
+                                                                toItem:self
+                                                             attribute:NSLayoutAttributeRight
+                                                            multiplier:1.0f
+                                                              constant:-TextPaddingToScreenEdge];
+    return @[top, left, right];
 }
+
 - (NSArray *) textLabelRightConstraints {
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.textLabelRight
-                                                           attribute:NSLayoutAttributeTop
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.avatarImageRight
-                                                           attribute:NSLayoutAttributeTop
-                                                          multiplier:1.0f
-                                                            constant:0];
+    NSLayoutConstraint *top = [WFBAutoLayout matchTopEdge:self.textBubbleRight to:self.avatarImageRight plusOffset:0];
     
-    NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.textLabelRight
+    NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:self.textBubbleRight
                                                             attribute:NSLayoutAttributeRight
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.avatarImageRight
@@ -220,7 +176,7 @@ static const CGFloat TextMaxWidth = 150.0f;
                                                            multiplier:1.0f
                                                              constant:-TextPaddingBetweenAvatar];
     
-    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.textLabelRight
+    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:self.textBubbleRight
                                                              attribute:NSLayoutAttributeWidth
                                                              relatedBy:NSLayoutRelationLessThanOrEqual
                                                                 toItem:Nil
@@ -234,7 +190,7 @@ static const CGFloat TextMaxWidth = 150.0f;
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.captionLabelLeft
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.textLabelLeft
+                                                              toItem:self.textBubbleLeft
                                                            attribute:NSLayoutAttributeBottom
                                                           multiplier:1.0f
                                                             constant:0];
@@ -242,7 +198,7 @@ static const CGFloat TextMaxWidth = 150.0f;
     NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.captionLabelLeft
                                                             attribute:NSLayoutAttributeLeft
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.textLabelLeft
+                                                               toItem:self.textBubbleLeft
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1.0f
                                                              constant:0];
@@ -254,14 +210,15 @@ static const CGFloat TextMaxWidth = 150.0f;
                                                              attribute:NSLayoutAttributeNotAnAttribute
                                                             multiplier:0
                                                               constant:TextMaxWidth];
-    return @[top, left, width];
+    NSLayoutConstraint *bottom = [WFBAutoLayout matchBotttomEdge:self.captionLabelLeft to:self plusOffset:-CellBottomPadding];
+    return @[top, left, width, bottom];
 }
 
 - (NSArray *) captionLabelRightConstraints {
     NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.captionLabelRight
                                                            attribute:NSLayoutAttributeTop
                                                            relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.textLabelRight
+                                                              toItem:self.textBubbleRight
                                                            attribute:NSLayoutAttributeBottom
                                                           multiplier:1.0f
                                                             constant:0];
@@ -269,7 +226,7 @@ static const CGFloat TextMaxWidth = 150.0f;
     NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:self.captionLabelRight
                                                             attribute:NSLayoutAttributeRight
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.textLabelRight
+                                                               toItem:self.textBubbleRight
                                                             attribute:NSLayoutAttributeRight
                                                            multiplier:1.0f
                                                              constant:0];
@@ -290,13 +247,13 @@ static const CGFloat TextMaxWidth = 150.0f;
  */
 
 - (CGSize) intrinsicContentSize {
-    CGSize avatarSize = [self.avatarImageLeft frame].size;
-    avatarSize.height += AvatarTopPadding * 2;
-    
-    CGSize textSize = [self.textLabelLeft intrinsicContentSize];
-    CGSize captionSize = [self.captionLabelLeft intrinsicContentSize];
+    CGSize textSize = [[self currentTextBubble] intrinsicContentSize];
+    CGSize captionSize = [[self currentCaptionLabel] intrinsicContentSize];
     CGFloat width = 320.f;
-    CGFloat height = MAX(textSize.height + captionSize.height, avatarSize.height);
+    CGFloat minHeight = AvatarSize + AvatarTopPadding + CellBottomPadding;
+    CGFloat currentHeight = AvatarTopPadding + textSize.height + captionSize.height + CellBottomPadding;
+    CGFloat height = MAX(minHeight, currentHeight);
+    height += 1;
     return CGSizeMake(width, height);
 }
 
@@ -304,12 +261,13 @@ static const CGFloat TextMaxWidth = 150.0f;
     BOOL hideRightViews = self.avatarPosition == ZRAvatarPositionLeft;
     
     self.avatarImageRight.hidden = hideRightViews;
-    self.textLabelRight.hidden = hideRightViews;
+    self.textBubbleRight.hidden = hideRightViews;
     self.captionLabelRight.hidden = hideRightViews;
     
     self.avatarImageLeft.hidden = !hideRightViews;
-    self.textLabelLeft.hidden = !hideRightViews;
+    self.textBubbleLeft.hidden = !hideRightViews;
     self.captionLabelLeft.hidden = !hideRightViews;
+    
     [super layoutSubviews];
 }
 
@@ -320,15 +278,18 @@ static const CGFloat TextMaxWidth = 150.0f;
  */
 
 - (void)setTheText:(NSString *)string {
-    [self currentTextLabel].text = string;
+    [[self currentTextBubble] setBubbleText:string];
+    [self invalidateIntrinsicContentSize];
 }
 
 - (void)setTheCaption:(NSString *)caption{
     [self currentCaptionLabel].text = caption;
+    [self invalidateIntrinsicContentSize];
 }
 
 - (void)setAvatarImage:(UIImage *)avatar {
     [self currentAvatarImage].image = avatar;
+    [self invalidateIntrinsicContentSize];
 }
 
 
@@ -346,12 +307,12 @@ static const CGFloat TextMaxWidth = 150.0f;
     }
 }
 
-- (UILabel *)currentTextLabel {
+- (SRFBubbleView *)currentTextBubble {
     if(self.avatarPosition == ZRAvatarPositionLeft){
-        return self.textLabelLeft;
+        return self.textBubbleLeft;
     }
     else {
-        return self.textLabelRight;
+        return self.textBubbleRight;
     }
 }
 
